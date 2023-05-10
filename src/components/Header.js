@@ -80,9 +80,7 @@ const Header = () => {
 
   return (
     <>
-      {isOpen ? (
-        <Modal onModalClose={onModalClose} style={{ zIndex: 6 }} />
-      ) : null}
+      {isOpen ? <Modal onModalClose={onModalClose} /> : null}
       <Block>
         <LogoImg src={Logo} style={{}} />
         <div style={{ display: "flex", marginRight: "auto" }}>
@@ -94,7 +92,7 @@ const Header = () => {
         <div style={{ display: "flex", marginTop: "auto" }}>
           <Search
             type="text"
-            placeholder="콘텐츠, 인물, 컬렉션, 유저를 검색해보세요."
+            placeholder="🔍 콘텐츠, 인물, 컬렉션, 유저를 검색해보세요."
             style={{}}
           />
           <LoginBtn onClick={() => setIsOpen(true)}>로그인</LoginBtn>
