@@ -11,7 +11,6 @@ const Block = styled.div`
 const Main = () => {
   return (
     <Block>
-      <Header />
       <Ranking movieInfo={Data} />
     </Block>
   );

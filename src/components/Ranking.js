@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Info from "./Info";
 
@@ -22,7 +23,12 @@ const Ranking = ({ movieInfo }) => {
       <Title>박스오피스 순위</Title>
       <Scroll>
         {movieInfo.map((movie) => (
-          <Info movie={movie} />
+          <Link
+            to={`${movie.rank}`}
+            style={{ textDecoration: "none", color: "Black" }}
+          >
+            <Info movie={movie} />
+          </Link>
         ))}
       </Scroll>
     </>

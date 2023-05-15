@@ -22,6 +22,7 @@ const Rank = styled.div`
 const Img = styled.img`
   width: 250px;
   height: auto;
+  margin-bottom: 12px;
   vertical-align: middle;
   border-radius: 2%;
 `;
@@ -58,6 +59,7 @@ const PercentNAudience = styled.div`
 const Info = (props) => {
   const { rank, img, title, year, country, average, percent, audience } =
     props.movie;
+
   const changeAudience = () => {
     return audience === ""
       ? null
