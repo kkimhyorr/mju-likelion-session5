@@ -3,6 +3,37 @@ import styled from "styled-components";
 import Modal from "./Modal";
 import { useState } from "react";
 
+const Header = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const onModalClose = () => {
+    setIsOpen(false);
+  };
+
+  return (
+    <>
+      {isOpen ? <Modal onModalClose={onModalClose} /> : null}
+      <Block>
+        <LogoImg src={Logo} />
+        <MarginRightAuto>
+          <MovieBtn>영화</MovieBtn>
+          <TvBtn>TV</TvBtn>
+          <TvBtn>책</TvBtn>
+          <TvBtn>웹툰</TvBtn>
+        </MarginRightAuto>
+        <MarginTopAuto>
+          <Search
+            type="text"
+            placeholder="🔍 콘텐츠, 인물, 컬렉션, 유저를 검색해보세요."
+          />
+          <LoginBtn onClick={() => setIsOpen(true)}>로그인</LoginBtn>
+          <JoinBtn>회원가입</JoinBtn>
+        </MarginTopAuto>
+      </Block>
+    </>
+  );
+};
+
 const Block = styled.div`
   display: flex;
   margin-top: 10px;
@@ -18,23 +49,25 @@ const LogoImg = styled.img`
 `;
 
 const MovieBtn = styled.button`
-  width: 50px;
-  height: 20px;
+  /* width: 50px;
+  height: 20px; */
   margin: auto;
   margin-left: 20px;
   background-color: white;
   border: 0px;
   font-size: 15px;
+  display: flex;
+  align-items: center;
 `;
 
 const TvBtn = styled.button`
-  width: 50px;
-  height: 20px;
   margin: 20px 0px;
   background-color: white;
   border: 0px;
   font-size: 15px;
   color: #7e7e7e;
+  display: flex;
+  align-items: center;
 `;
 
 const LoginBtn = styled.button`
@@ -71,36 +104,13 @@ const Search = styled.input`
   padding: 1em;
 `;
 
-const Header = () => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const onModalClose = () => {
-    setIsOpen(false);
-  };
-
-  return (
-    <>
-      {isOpen ? <Modal onModalClose={onModalClose} /> : null}
-      <Block>
-        <LogoImg src={Logo} style={{}} />
-        <div style={{ display: "flex", marginRight: "auto" }}>
-          <MovieBtn style={{}}>영화</MovieBtn>
-          <TvBtn style={{}}>TV</TvBtn>
-          <TvBtn style={{}}>책</TvBtn>
-          <TvBtn style={{}}>웹툰</TvBtn>
-        </div>
-        <div style={{ display: "flex", marginTop: "auto" }}>
-          <Search
-            type="text"
-            placeholder="🔍 콘텐츠, 인물, 컬렉션, 유저를 검색해보세요."
-            style={{}}
-          />
-          <LoginBtn onClick={() => setIsOpen(true)}>로그인</LoginBtn>
-          <JoinBtn style={{}}>회원가입</JoinBtn>
-        </div>
-      </Block>
-    </>
-  );
-};
+const MarginRightAuto = styled.div`
+  display: flex;
+  margin-right: auto;
+`;
+const MarginTopAuto = styled.div`
+  display: flex;
+  margin-top: auto;
+`;
 
 export default Header;

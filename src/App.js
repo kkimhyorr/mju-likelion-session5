@@ -9,7 +9,7 @@ function App() {
     <>
       <Header />
       <Routes>
-        <Route path="/:rankP" element={<InfoPage />} />
+        <Route path="/:id" element={<InfoPage />} />
         <Route path="/" element={<Main />} />
       </Routes>
     </>

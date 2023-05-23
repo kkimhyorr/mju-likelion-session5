@@ -1,5 +1,22 @@
 import styled from "styled-components";
 
+const Info = (props) => {
+  const { poster_path, title, release_date, vote_average } = props.movie;
+  const index = props.index;
+
+  return (
+    <Box>
+      <ImgBox>
+        <Rank>{index + 1}</Rank>
+        <Img src={`https://image.tmdb.org/t/p/w500${poster_path}`} />
+      </ImgBox>
+      <Title>{title}</Title>
+      <Date>{release_date}</Date>
+      <Average>{vote_average && `평점 ★${vote_average}`}</Average>
+    </Box>
+  );
+};
+
 const Box = styled.div`
   margin: 10px;
   width: 270px;
@@ -38,7 +55,7 @@ const Title = styled.div`
   text-overflow: ellipsis;
 `;
 
-const YearNCountry = styled.div`
+const Date = styled.div`
   font-weight: 500;
   font-size: 15px;
   color: #292a32;
@@ -49,45 +66,5 @@ const Average = styled.div`
   font-size: 15px;
   color: #545765;
 `;
-
-const PercentNAudience = styled.div`
-  font-weight: 500;
-  font-size: 15px;
-  color: #76767c;
-`;
-
-const Info = (props) => {
-  const { rank, img, title, year, country, average, percent, audience } =
-    props.movie;
-
-  const changeAudience = () => {
-    return audience === ""
-      ? null
-      : parseInt(audience) >= 10000
-      ? "누적 관객" + parseInt(audience) / 10000 + "만 명"
-      : "누적 관객" + audience + "명";
-  };
-
-  const changeAverage = () => {
-    return average === "" ? null : "평점★" + average;
-  };
-
-  return (
-    <Box>
-      <ImgBox>
-        <Rank>{rank}</Rank>
-        <Img src={img} style={{}} />
-      </ImgBox>
-      <Title>{title}</Title>
-      <YearNCountry>
-        {year} · {country}
-      </YearNCountry>
-      <Average>{changeAverage()}</Average>
-      <PercentNAudience>
-        예매율 {percent} · {changeAudience()}
-      </PercentNAudience>
-    </Box>
-  );
-};
 
 export default Info;

@@ -1,7 +1,76 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import datas from "../assets/Data";
+import axios from "axios";
+import { useState, useEffect } from "react";
+
+const InfoPage = () => {
+  const { id } = useParams();
+
+  const [data, setData] = useState([]);
+  const options = {
+    method: "GET",
+    headers: {
+      accept: "application/json",
+      Authorization: "Bearer " + process.env.REACT_APP_API_KEY,
+    },
+  };
+
+  useEffect(() => {
+    axios(`https:api.themoviedb.org/3/movie/${id}?language=ko-KR`, options)
+      .then((res) => {
+        setData(res.data);
+        console.log(res.data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  return (
+    <>
+      <BackGround>
+        <Column>
+          <TitleBox>
+            <Row>
+              <Img
+                src={`https://image.tmdb.org/t/p/w500${data.poster_path}`}
+              ></Img>
+              <ColumnNEnd>
+                <Title>{data.title}</Title>
+                <Row>
+                  <Year> {data.release_date}</Year>
+                  <Genre>
+                    {data.genres &&
+                      data.genres.map((item) => item.name).join(" | ")}
+                  </Genre>
+                </Row>
+                <Average>평점 ★{data.vote_average}</Average>
+              </ColumnNEnd>
+            </Row>
+          </TitleBox>
+          <InfoBox>
+            <Center>
+              <div>
+                <NormalInfo>기본정보</NormalInfo>
+                <OriginalTitle>
+                  <BoldText>원제 </BoldText>
+                  {data.original_title}
+                </OriginalTitle>
+                <Line />
+                <RunningTime>
+                  <BoldText>상영시간 </BoldText> {data.runtime}분
+                </RunningTime>
+                <Line />
+                <Description>
+                  <BoldText>내용 </BoldText> {data.overview}
+                </Description>
+              </div>
+            </Center>
+          </InfoBox>
+        </Column>
+      </BackGround>
+    </>
+  );
+};
 
 const BackGround = styled.div`
   background-color: rgba(0, 0, 0, 0.08);
@@ -33,22 +102,6 @@ const Title = styled.div`
   margin-bottom: 20px;
 `;
 
-const Rank = styled.div`
-  font-size: 15px;
-  font-weight: 500;
-`;
-
-const Percent = styled.div`
-  font-size: 15px;
-  font-weight: 500;
-`;
-
-const Audience = styled.div`
-  font-size: 15px;
-  font-weight: 500;
-  margin-left: 10px;
-`;
-
 const Year = styled.div`
   font-size: 15px;
   font-weight: 500;
@@ -59,11 +112,6 @@ const Genre = styled.div`
   font-size: 15px;
   font-weight: 500;
   margin: auto 10px;
-`;
-
-const Country = styled.div`
-  font-size: 15px;
-  font-weight: 500;
 `;
 
 const Average = styled.div`
@@ -109,11 +157,6 @@ const RunningTime = styled.div`
   font-weight: 500;
 `;
 
-const Age = styled.div`
-  font-size: 17px;
-  font-weight: 500;
-`;
-
 const Description = styled.div`
   font-size: 17px;
   font-weight: 500;
@@ -148,90 +191,5 @@ const Center = styled.div`
   display: flex;
   text-align: center;
 `;
-
-const InfoPage = () => {
-  const { rankP } = useParams();
-  const Info = datas.filter((data) => data.rank === parseInt(rankP))[0];
-
-  console.log(Info);
-  const {
-    rank,
-    img,
-    title,
-    year,
-    country,
-    average,
-    percent,
-    audience,
-    originalTitle,
-    genre,
-    runningTime,
-    age,
-    description,
-  } = Info;
-
-  const changeAudience = () => {
-    return audience === ""
-      ? null
-      : parseInt(audience) >= 10000
-      ? "누적 관객" + parseInt(audience) / 10000 + "만 명"
-      : "누적 관객" + audience + "명";
-  };
-
-  const changeAverage = () => {
-    return average === "" ? null : "평점★" + average;
-  };
-
-  return (
-    <>
-      <BackGround>
-        <Column>
-          <TitleBox>
-            <Row>
-              <Img src={img}></Img>
-              <ColumnNEnd>
-                <Row>
-                  <Rank>예매 순위{rank}위</Rank>
-                  <Percent>({percent})</Percent>
-                  <Audience>{changeAudience()}</Audience>
-                </Row>
-                <Title>{title}</Title>
-                <Row>
-                  <Year> {year}</Year>
-                  <Genre>{genre} </Genre>
-                  <Country>{country}</Country>
-                </Row>
-                <Average>{changeAverage()}</Average>
-              </ColumnNEnd>
-            </Row>
-          </TitleBox>
-          <InfoBox>
-            <Center>
-              <div>
-                <NormalInfo>기본정보</NormalInfo>{" "}
-                <OriginalTitle>
-                  <BoldText>원제 </BoldText>
-                  {originalTitle}
-                </OriginalTitle>
-                <Line />
-                <RunningTime>
-                  <BoldText>상영시간 </BoldText> {runningTime}
-                </RunningTime>
-                <Line />
-                <Age>
-                  <BoldText>연령 등급 </BoldText> {age}
-                </Age>
-                <Line />
-                <Description>
-                  <BoldText>내용 </BoldText> {description}
-                </Description>
-              </div>
-            </Center>
-          </InfoBox>
-        </Column>
-      </BackGround>
-    </>
-  );
-};
 
 export default InfoPage;

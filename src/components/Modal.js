@@ -6,6 +6,48 @@ import Google from "../assets/image/icon_google.png";
 import Apple from "../assets/image/icon_apple.png";
 import Line from "../assets/image/icon_line.png";
 
+const Modal = ({ onModalClose }) => {
+  return (
+    <>
+      <BackGround>
+        <WhiteBox>
+          <MarginRightAuto>
+            <Out type="button" onClick={onModalClose}>
+              X
+            </Out>
+          </MarginRightAuto>
+          <LogoImg src={Logo}></LogoImg>
+          <b>로그인</b>
+          <Input type="text" placeholder="이메일" color="grey" />
+          <Input type="text" placeholder="비밀번호" />
+          <Button type="submit">
+            <TextWhite>로그인</TextWhite>
+          </Button>
+          <Pink>비밀번호를 잊어버리셨나요?</Pink>
+          <TextRow>
+            <Grey>계정이 없으신가요? </Grey>
+            <Pink>회원가입</Pink>
+          </TextRow>
+          <Grey>───────── OR ─────────</Grey>
+          <Logos>
+            <KakaoImg src={Kakao}></KakaoImg>
+            <GoogleImg src={Google}></GoogleImg>
+            <TwitterImg src={Twitter}></TwitterImg>
+            <AppleImg src={Apple}></AppleImg>
+            <LineImg src={Line}></LineImg>
+          </Logos>
+          <GreyBox>
+            <Grey>
+              TIP.왓챠 계정이 있으신가요? 왓챠와 왓챠피디아는 같은 계정을
+              사용해요.
+            </Grey>
+          </GreyBox>
+        </WhiteBox>
+      </BackGround>
+    </>
+  );
+};
+
 const BackGround = styled.div`
   position: fixed;
   top: 0;
@@ -20,7 +62,7 @@ const WhiteBox = styled.div`
   background-color: white;
   height: 630px;
   width: 350px;
-  margin: auto;
+  margin: 30px auto;
   border-radius: 7px;
 `;
 
@@ -125,46 +167,9 @@ const TextRow = styled.div`
   flex-direction: row;
 `;
 
-const Modal = ({ onModalClose }) => {
-  return (
-    <>
-      <BackGround>
-        <WhiteBox>
-          <div style={{ display: "flex", marginRight: "auto" }}>
-            <Out style={{}} type="button" onClick={onModalClose}>
-              X
-            </Out>
-          </div>
-          <LogoImg src={Logo} style={{}}></LogoImg>
-          <b>로그인</b>
-          <Input type="text" placeholder="이메일" color="grey" />
-          <Input type="text" placeholder="비밀번호" style={{}} />
-          <Button type="submit">
-            <TextWhite>로그인</TextWhite>
-          </Button>
-          <Pink>비밀번호를 잊어버리셨나요?</Pink>
-          <TextRow>
-            <Grey>계정이 없으신가요? </Grey>
-            <Pink>회원가입</Pink>
-          </TextRow>
-          <Grey>───────── OR ─────────</Grey>
-          <Logos>
-            <KakaoImg src={Kakao} style={{}}></KakaoImg>
-            <GoogleImg src={Google} style={{}}></GoogleImg>
-            <TwitterImg src={Twitter} style={{}}></TwitterImg>
-            <AppleImg src={Apple} style={{}}></AppleImg>
-            <LineImg src={Line} style={{}}></LineImg>
-          </Logos>
-          <GreyBox style={{}}>
-            <Grey style={{}}>
-              TIP.왓챠 계정이 있으신가요? 왓챠와 왓챠피디아는 같은 계정을
-              사용해요.
-            </Grey>
-          </GreyBox>
-        </WhiteBox>
-      </BackGround>
-    </>
-  );
-};
+const MarginRightAuto = styled.div`
+  display: flex;
+  margin-right: auto;
+`;
 
 export default Modal;
