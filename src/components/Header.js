@@ -12,9 +12,9 @@ const Header = () => {
 
   return (
     <>
-      {isOpen ? <Modal onModalClose={onModalClose} /> : null}
+      {isOpen && <Modal onModalClose={onModalClose} />}
       <Block>
-        <LogoImg src={Logo} />
+        <LogoImg src={Logo} alt="LogoImg" />
         <MarginRightAuto>
           <MovieBtn>영화</MovieBtn>
           <TvBtn>TV</TvBtn>
