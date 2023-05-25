@@ -3,7 +3,6 @@ import styled from "styled-components";
 import Info from "./Info";
 
 const Ranking = ({ movieInfo }) => {
-  console.log(movieInfo);
   return (
     <>
       <Title>박스오피스 순위</Title>

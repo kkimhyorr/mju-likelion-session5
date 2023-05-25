@@ -19,7 +19,6 @@ const InfoPage = () => {
     axios(`https:api.themoviedb.org/3/movie/${id}?language=ko-KR`, options)
       .then((res) => {
         setData(res.data);
-        console.log(res.data);
       })
       .catch((err) => console.log(err));
   }, []);
