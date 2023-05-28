@@ -2,11 +2,19 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
 import { useState, useEffect } from "react";
+import { topRatedAtom } from "../atom/topRated";
+import { useRecoilValue } from "recoil";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const InfoPage = () => {
   const { id } = useParams();
-
   const [data, setData] = useState([]);
+  // const [movieId, setMovieId] = useState([]);
+
+  const topRatedValue = useRecoilValue(topRatedAtom);
+  const navigate = useNavigate();
+
   const options = {
     method: "GET",
     headers: {
@@ -19,6 +27,7 @@ const InfoPage = () => {
     axios(`https:api.themoviedb.org/3/movie/${id}?language=ko-KR`, options)
       .then((res) => {
         setData(res.data);
+        console.log(res.data);
       })
       .catch((err) => console.log(err));
   }, []);
@@ -26,6 +35,9 @@ const InfoPage = () => {
   return (
     <>
       <BackGround>
+        <BackDropImg
+          src={`https://image.tmdb.org/t/p/w500${data.backdrop_path}`}
+        ></BackDropImg>
         <Column>
           <TitleBox>
             <Row>
@@ -46,24 +58,43 @@ const InfoPage = () => {
             </Row>
           </TitleBox>
           <InfoBox>
-            <Center>
-              <div>
-                <NormalInfo>기본정보</NormalInfo>
-                <OriginalTitle>
-                  <BoldText>원제 </BoldText>
-                  {data.original_title}
-                </OriginalTitle>
-                <Line />
-                <RunningTime>
-                  <BoldText>상영시간 </BoldText> {data.runtime}분
-                </RunningTime>
-                <Line />
-                <Description>
-                  <BoldText>내용 </BoldText> {data.overview}
-                </Description>
-              </div>
-            </Center>
+            <div>
+              <NormalInfo>기본정보</NormalInfo>
+              <DetailedInfo>{data.title}</DetailedInfo>
+              <DetailedInfo>{data.original_title}</DetailedInfo>
+              <DetailedInfo>
+                {data.release_date} ·{" "}
+                {data.genres &&
+                  data.genres.map((item) => item.name).join(" | ")}
+              </DetailedInfo>
+              <DetailedInfo>{data.runtime}분</DetailedInfo>
+              <DetailedInfo>{data.overview}</DetailedInfo>
+            </div>
           </InfoBox>
+
+          <TopRatedBox>
+            <TopRatedTopTitle>추천작</TopRatedTopTitle>
+            {topRatedValue &&
+              topRatedValue?.map((movie) => {
+                return (
+                  <TopRatedDetailBox
+                    onClick={() => {
+                      navigate(`/${movie.id}`);
+                    }}
+                  >
+                    {/* <Link to={`${movie.id}`}> */}
+                    <TopRatedPoster
+                      src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                    ></TopRatedPoster>
+                    <TopRatedTitle>{movie.title}</TopRatedTitle>
+                    <TopRatedAverage>
+                      평점 ★{movie.vote_average}
+                    </TopRatedAverage>
+                    {/* </Link> */}
+                  </TopRatedDetailBox>
+                );
+              })}
+          </TopRatedBox>
         </Column>
       </BackGround>
     </>
@@ -71,9 +102,16 @@ const InfoPage = () => {
 };
 
 const BackGround = styled.div`
-  background-color: rgba(0, 0, 0, 0.08);
   height: 100%;
   width: 100%;
+  background-color: rgba(0, 0, 0, 0.08);
+`;
+
+const BackDropImg = styled.img`
+  height: auto;
+  width: 100%;
+  margin-bottom: -500px;
+  /* object-fit: cover; */
 `;
 
 const TitleBox = styled.div`
@@ -93,10 +131,9 @@ const Img = styled.img`
   margin: -130px 30px 20px 100px;
 `;
 
-const Title = styled.div`
+const Title = styled.p`
   font-size: 30px;
   font-weight: 900;
-  margin-top: 10px;
   margin-bottom: 20px;
 `;
 
@@ -121,52 +158,33 @@ const Average = styled.div`
 
 const InfoBox = styled.div`
   background-color: white;
-  height: 450px;
-  width: 85%;
-  display: flex;
-  align-items: center;
-  margin: 30px auto;
+  height: auto;
+  width: 50%;
+  margin: 30px;
+  margin-left: 150px;
+  padding-bottom: 20px;
   border-radius: 0.5em;
   border: 1px solid rgba(0, 0, 0, 0.08);
-`;
-
-const NormalInfo = styled.div`
-  font-size: 20px;
-  font-weight: 700;
-  margin-top: 20px;
-  margin-bottom: 20px;
 `;
 
 const Line = styled.div`
   background-color: rgba(0, 0, 0, 0.08);
   height: 1px;
-  width: 70%;
-  margin: 5px;
+  width: 90%;
+  /* margin: 5px; */
   margin: 7px auto;
 `;
 
-const OriginalTitle = styled.div`
-  font-size: 17px;
-  font-weight: 500;
-`;
-
-const RunningTime = styled.div`
-  font-size: 17px;
-  font-weight: 500;
-`;
-
-const Description = styled.div`
-  font-size: 17px;
-  font-weight: 500;
-  width: 70%;
-  margin: auto auto;
-  line-height: 24px;
-`;
-
-const BoldText = styled.div`
+const NormalInfo = styled.div`
+  font-size: 20px;
   font-weight: 700;
-  font-size: 18px;
-  display: contents;
+  margin: 20px 30px;
+`;
+
+const DetailedInfo = styled.div`
+  font-size: 15px;
+  font-weight: 500;
+  margin: 3px 100px;
 `;
 
 const Row = styled.div`
@@ -185,9 +203,59 @@ const Column = styled.div`
   flex-direction: column;
 `;
 
-const Center = styled.div`
+const TopRatedBox = styled.div`
+  height: auto;
+  width: 50%;
+  background-color: white;
+  margin: auto;
+  margin-left: 150px;
+  margin-bottom: 30px;
   display: flex;
-  text-align: center;
+  align-items: center;
+  flex-wrap: wrap;
+  border-radius: 0.5em;
+`;
+
+const TopRatedTopTitle = styled.p`
+  width: 100%;
+  height: 10px;
+  color: black;
+  font-size: 20px;
+  font-weight: 700;
+  /* margin-left: 30px; */
+  margin: 25px 30px;
+  /* margin-bottom: 50px; */
+`;
+
+const TopRatedDetailBox = styled.button`
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  width: 22%;
+  margin: auto 10px;
+`;
+
+const TopRatedPoster = styled.img`
+  height: auto;
+  width: 85%;
+  margin: auto;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 3%;
+`;
+
+const TopRatedTitle = styled.p`
+  color: black;
+  font-size: 15px;
+  font-weight: 700;
+  margin-left: 10px;
+  margin-bottom: auto;
+`;
+const TopRatedAverage = styled.p`
+  color: black;
+  font-size: 13px;
+  font-weight: 500;
+  /* margin-top: 10px; */
+  margin-left: 10px;
 `;
 
 export default InfoPage;

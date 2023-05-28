@@ -24,9 +24,9 @@ const Box = styled.div`
   z-index: -1;
 `;
 
-const Rank = styled.div`
-  width: 30px;
-  height: 30px;
+const Rank = styled.p`
+  width: 22px;
+  height: 22px;
   background-color: rgba(0, 0, 0, 0.5);
   color: white;
   font-weight: 600;
@@ -34,6 +34,8 @@ const Rank = styled.div`
   text-align: center;
   position: absolute;
   margin-top: 3px;
+  margin-left: 3px;
+  padding: 4px;
 `;
 
 const Img = styled.img`

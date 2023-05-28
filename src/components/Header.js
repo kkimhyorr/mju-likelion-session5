@@ -2,6 +2,7 @@ import Logo from "../assets/image/icon_logo.png";
 import styled from "styled-components";
 import Modal from "./Modal";
 import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -10,11 +11,17 @@ const Header = () => {
     setIsOpen(false);
   };
 
+  const navigate = useNavigate();
+
+  const handleGoToMainPage = () => {
+    navigate("/");
+  };
+
   return (
     <>
       {isOpen && <Modal onModalClose={onModalClose} />}
       <Block>
-        <LogoImg src={Logo} alt="LogoImg" />
+        <LogoImg src={Logo} alt="LogoImg" onClick={handleGoToMainPage} />
         <MarginRightAuto>
           <MovieBtn>영화</MovieBtn>
           <TvBtn>TV</TvBtn>
@@ -96,7 +103,7 @@ const Search = styled.input`
   width: 300px;
   height: 20px;
   margin: auto;
-  margin-top: 10px;
+  margin-top: 5px;
   border: 0px;
   background-color: #f5f5f5;
   border-radius: 5px;
