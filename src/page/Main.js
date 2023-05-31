@@ -35,7 +35,6 @@ const Main = () => {
     )
       .then((res) => {
         setTopRated(res.data.results);
-        console.log(res.data.results);
       })
       .catch((err) => console.log(err));
   }, []);
