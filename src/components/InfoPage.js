@@ -4,13 +4,11 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { topRatedAtom } from "../atom/topRated";
 import { useRecoilValue } from "recoil";
-import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 const InfoPage = () => {
   const { id } = useParams();
   const [data, setData] = useState([]);
-  // const [movieId, setMovieId] = useState([]);
 
   const topRatedValue = useRecoilValue(topRatedAtom);
   const navigate = useNavigate();
@@ -27,10 +25,9 @@ const InfoPage = () => {
     axios(`https:api.themoviedb.org/3/movie/${id}?language=ko-KR`, options)
       .then((res) => {
         setData(res.data);
-        console.log(res.data);
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [id]);
 
   return (
     <>
@@ -233,6 +230,8 @@ const TopRatedDetailBox = styled.button`
   height: auto;
   width: 22%;
   margin: auto 10px;
+  border: 0px;
+  background-color: transparent;
 `;
 
 const TopRatedPoster = styled.img`
@@ -244,17 +243,22 @@ const TopRatedPoster = styled.img`
 `;
 
 const TopRatedTitle = styled.p`
+  width: 100%;
   color: black;
   font-size: 15px;
   font-weight: 700;
-  margin-left: 10px;
+  margin-left: 8px;
+  display: flex;
+  text-align: left;
   margin-bottom: auto;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 const TopRatedAverage = styled.p`
   color: black;
   font-size: 13px;
   font-weight: 500;
-  /* margin-top: 10px; */
   margin-left: 10px;
 `;
 
