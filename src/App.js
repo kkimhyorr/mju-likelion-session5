@@ -1,14 +1,17 @@
+import { Route, Routes } from "react-router-dom";
 import "./App.css";
-import RandomClass from "./scss/RandomClass";
-import Button from "./scss/Button";
-import Circle from "./styled-components/Circle";
+import Main from "./page/Main";
+import InfoPage from "./components/InfoPage";
+import Header from "./components/Header";
 
 function App() {
   return (
     <>
-      <RandomClass>Button</RandomClass>
-      <Button>Button</Button>
-      <Circle />
+      <Header />
+      <Routes>
+        <Route path="/:id" element={<InfoPage />} />
+        <Route path="/" element={<Main />} />
+      </Routes>
     </>
   );
 }
