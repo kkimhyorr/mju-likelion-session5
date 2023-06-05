@@ -22,7 +22,7 @@ const InfoPage = () => {
   };
 
   useEffect(() => {
-    axios(`https:api.themoviedb.org/3/movie/${id}?language=ko-KR`, options)
+    axios(`https://api.themoviedb.org/3/movie/${id}?language=ko-KR`, options)
       .then((res) => {
         setData(res.data);
       })
@@ -108,7 +108,6 @@ const BackDropImg = styled.img`
   height: auto;
   width: 100%;
   margin-bottom: -500px;
-  /* object-fit: cover; */
 `;
 
 const TitleBox = styled.div`
@@ -162,14 +161,6 @@ const InfoBox = styled.div`
   padding-bottom: 20px;
   border-radius: 0.5em;
   border: 1px solid rgba(0, 0, 0, 0.08);
-`;
-
-const Line = styled.div`
-  background-color: rgba(0, 0, 0, 0.08);
-  height: 1px;
-  width: 90%;
-  /* margin: 5px; */
-  margin: 7px auto;
 `;
 
 const NormalInfo = styled.div`

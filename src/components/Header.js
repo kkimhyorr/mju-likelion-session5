@@ -2,7 +2,7 @@ import Logo from "../assets/image/icon_logo.png";
 import styled from "styled-components";
 import Modal from "./Modal";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
